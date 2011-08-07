@@ -1,6 +1,8 @@
 #include <assert.h>
 #include <stdio.h>
-#include <sys/disk.h>
+//#include <sys/disk.h>
+#include <sys/ioctl.h>
+#define DKIOCEJECT                            _IO('d', 21)
 #include <errno.h>
 #include <fcntl.h>
 #include <stdio.h>
@@ -17,7 +19,7 @@ int main(int argc, char **argv) {
         asprintf(&p, "/dev/%s", p);
     }
 
-    int fd = open(p, O_RDWR);
+    int fd = open(p, O_RDONLY);
     if(fd == -1) {
         fprintf(stderr, "Could not open: %s\n", strerror(errno));
         return 1;
